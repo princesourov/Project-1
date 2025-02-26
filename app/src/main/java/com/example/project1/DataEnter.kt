@@ -39,6 +39,7 @@ class DataEnter : AppCompatActivity() {
 
         //Firebase
         var user = Users(id,name,email,phone)
+
             if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
                 Toast.makeText(applicationContext, "Please fill all details", Toast.LENGTH_SHORT).show()
             }
@@ -49,9 +50,11 @@ class DataEnter : AppCompatActivity() {
             viewbinding.Etemail.text.clear()
             viewbinding.Etphone.text.clear()
                 }
+
             .addOnFailureListener { err ->
                 Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
             }
+
             }
     }
 }

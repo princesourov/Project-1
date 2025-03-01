@@ -20,7 +20,7 @@ class DataEnter : AppCompatActivity() {
         val view = viewbinding.root
         setContentView(view)
 
-        //Firebase
+        // Firebase initialization
         database = FirebaseDatabase.getInstance()
         ref = database.reference.child("Users")
 
@@ -32,29 +32,29 @@ class DataEnter : AppCompatActivity() {
     }
 
     private fun addUserData() {
-        var name = viewbinding.Etname.text.toString()
-        var email = viewbinding.Etemail.text.toString()
-        var phone = viewbinding.Etphone.text.toString()
-        var id =ref.push().key.toString()
+        val name = viewbinding.Etname.text.toString().trim()
+        val email = viewbinding.Etemail.text.toString().trim()
+        val phone = viewbinding.Etphone.text.toString().trim()
+        val id = ref.push().key ?: return
 
         //Firebase
         var user = Users(id,name,email,phone)
-
-            if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
+        if (name.isEmpty() || email.isEmpty() || phone.isEmpty()) {
                 Toast.makeText(applicationContext, "Please fill all details", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                ref.child(id).setValue(user).addOnCompleteListener {
+        }
+        else {
+            ref.child(id).setValue(user).addOnCompleteListener {
             Toast.makeText(this, "User Added", Toast.LENGTH_SHORT).show()
-            viewbinding.Etname.text.clear()
-            viewbinding.Etemail.text.clear()
-            viewbinding.Etphone.text.clear()
-                }
+                //Clear
+                viewbinding.Etname.text.clear()
+                viewbinding.Etemail.text.clear()
+                viewbinding.Etphone.text.clear()
+                viewbinding.Etname.requestFocus()
+            }
 
-            .addOnFailureListener { err ->
+                .addOnFailureListener { err ->
                 Toast.makeText(this, "Error ${err.message}", Toast.LENGTH_SHORT).show()
-            }
-
-            }
+                }
+        }
     }
 }

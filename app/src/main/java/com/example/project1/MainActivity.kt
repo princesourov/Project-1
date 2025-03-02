@@ -48,6 +48,7 @@ class MainActivity : AppCompatActivity() {
     fun userdatagate(){
         ref.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                arraylist.clear()
                 for(userdata in snapshot.children){
                     val user = userdata.getValue(Users::class.java)
                     if (user != null) {
